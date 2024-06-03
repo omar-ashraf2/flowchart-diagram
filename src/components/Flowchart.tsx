@@ -75,7 +75,7 @@ const Flowchart: React.FC = () => {
 
   return (
     <ReactFlowProvider>
-      <div style={{ height: 600 }}>
+      <div style={{ height: "95vh" }}>
         <ReactFlow nodes={nodes} edges={edges} nodeTypes={nodeTypes}>
           <MiniMap />
           <Controls />
