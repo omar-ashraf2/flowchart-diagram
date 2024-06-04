@@ -174,7 +174,7 @@ const Flowchart: React.FC = () => {
       case "diamond":
         return "Decision";
       case "output":
-        return `End ${count}`;
+        return `End`;
       default:
         return "Node";
     }
