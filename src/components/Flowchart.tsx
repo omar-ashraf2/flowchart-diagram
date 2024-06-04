@@ -13,9 +13,11 @@ import ReactFlow, {
   applyNodeChanges,
 } from "react-flow-renderer";
 import { Tooltip } from "react-tooltip";
-import DiamondNode from "./DiamondNode";
-import styles from "./Flowchart.module.css";
 import DefaultNode from "./DefaultNode";
+import DiamondNode from "./DiamondNode";
+import Sidebar from "./Sidebar";
+import { useDrop } from "react-dnd";
+import styles from "./Flowchart.module.css";
 
 const initialNodes: Node[] = [
   {
@@ -176,22 +178,49 @@ const Flowchart: React.FC = () => {
     setEdges((eds) => eds.filter((e) => e.id !== edge.id));
   }, []);
 
+  const [, drop] = useDrop({
+    accept: "node",
+    drop: (
+      item: { type: string; label: string; className: string },
+      monitor
+    ) => {
+      const offset = monitor.getSourceClientOffset();
+      if (offset) {
+        const position = {
+          x: offset.x - 250,
+          y: offset.y,
+        };
+        const newNode: Node = {
+          id: `${+new Date()}`,
+          type: item.type,
+          position,
+          data: { label: item.label },
+          className: `${styles.node} ${styles[`node-${item.type}`]}`,
+        };
+        setNodes((nds) => nds.concat(newNode));
+      }
+    },
+  });
+
   return (
     <ReactFlowProvider>
-      <div style={{ height: "95vh" }}>
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          nodeTypes={nodeTypes}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-          onEdgeClick={onEdgeClick}
-        >
-          <MiniMap />
-          <Controls />
-          <Tooltip id="tooltip" />
-        </ReactFlow>
+      <div className={styles.container} style={{ height: "96vh" }}>
+        <Sidebar />
+        <div ref={drop} className={styles.flowchart}>
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            nodeTypes={nodeTypes}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            onEdgeClick={onEdgeClick}
+          >
+            <MiniMap />
+            <Controls />
+            <Tooltip id="tooltip" />
+          </ReactFlow>
+        </div>
       </div>
     </ReactFlowProvider>
   );

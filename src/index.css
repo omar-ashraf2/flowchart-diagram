@@ -1,7 +1,3 @@
-/* .react-flow__node-default,
-.react-flow__node-group,
-.react-flow__node-input,
-.react-flow__node-output {
-  padding: 0 !important;
-  width: auto !important;
-} */
+body {
+  font-family: "Poppins", sans-serif;
+}
