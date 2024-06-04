@@ -28,7 +28,14 @@
   background: #f39c12;
   transform: rotate(45deg);
   text-align: center;
-  line-height: 100px;
   color: #fff;
   font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.diamond-content {
+  transform: rotate(-45deg);
 }
