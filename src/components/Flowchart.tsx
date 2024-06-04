@@ -15,6 +15,7 @@ import ReactFlow, {
 import { Tooltip } from "react-tooltip";
 import DiamondNode from "./DiamondNode";
 import styles from "./Flowchart.module.css";
+import DefaultNode from "./DefaultNode";
 
 const initialNodes: Node[] = [
   {
@@ -149,7 +150,7 @@ const initialEdges: Edge[] = [
   },
 ];
 
-const nodeTypes = { diamond: DiamondNode };
+const nodeTypes = { diamond: DiamondNode, default: DefaultNode };
 
 const Flowchart: React.FC = () => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
