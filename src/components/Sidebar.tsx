@@ -35,19 +35,23 @@ const Sidebar: React.FC = () => {
       <SidebarItem
         type="input"
         label="Start"
-        className={styles["node-start"]}
+        className={`${styles.node} ${styles["node-start"]}`}
       />
       <SidebarItem
         type="default"
         label="Step"
-        className={styles["node-step"]}
+        className={`${styles.node} ${styles["node-step"]}`}
       />
       <SidebarItem
         type="diamond"
         label="Decision"
-        className={styles["node-decision"]}
+        className={`${styles.node} ${styles["node-decision"]}`}
       />
-      <SidebarItem type="output" label="End" className={styles["node-end"]} />
+      <SidebarItem
+        type="output"
+        label="End"
+        className={`${styles.node} ${styles["node-end"]}`}
+      />
     </div>
   );
 };

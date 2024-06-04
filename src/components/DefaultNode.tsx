@@ -2,10 +2,14 @@ import React from "react";
 import { Handle, NodeProps, Position } from "react-flow-renderer";
 import styles from "./Flowchart.module.css";
 
-const DefaultNode: React.FC<NodeProps> = ({ data }) => {
+interface DefaultNodeProps extends NodeProps {
+  className?: string;
+}
+
+const DefaultNode: React.FC<DefaultNodeProps> = ({ data, className }) => {
   return (
     <div
-      className={styles.node}
+      className={`${styles.node} ${className}`}
       data-tooltip-id="tooltip"
       data-tooltip-content={String(data.label)}
     >

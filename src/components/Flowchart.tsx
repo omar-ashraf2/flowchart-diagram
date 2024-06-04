@@ -29,12 +29,14 @@ const initialNodes: Node[] = [
   },
   {
     id: "2",
+    type: "default",
     data: { label: "Step 1" },
     position: { x: 200, y: 100 },
     className: `${styles.node} ${styles["node-step"]}`,
   },
   {
     id: "3",
+    type: "default",
     data: { label: "Step 2" },
     position: { x: 350, y: 100 },
     className: `${styles.node} ${styles["node-step"]}`,
@@ -48,18 +50,21 @@ const initialNodes: Node[] = [
   },
   {
     id: "5",
+    type: "default",
     data: { label: "Step 3" },
     position: { x: 550, y: 250 },
     className: `${styles.node} ${styles["node-step"]}`,
   },
   {
     id: "6",
+    type: "default",
     data: { label: "Step 4" },
     position: { x: 350, y: 450 },
     className: `${styles.node} ${styles["node-step"]}`,
   },
   {
     id: "7",
+    type: "default",
     data: { label: "Step 5" },
     position: { x: 350, y: 550 },
     className: `${styles.node} ${styles["node-step"]}`,
@@ -73,6 +78,7 @@ const initialNodes: Node[] = [
   },
   {
     id: "9",
+    type: "default",
     data: { label: "Step 6" },
     position: { x: 600, y: 450 },
     className: `${styles.node} ${styles["node-step"]}`,
@@ -195,7 +201,7 @@ const Flowchart: React.FC = () => {
           type: item.type,
           position,
           data: { label: item.label },
-          className: `${styles.node} ${styles[`node-${item.type}`]}`,
+          className: item.className,
         };
         setNodes((nds) => nds.concat(newNode));
       }
