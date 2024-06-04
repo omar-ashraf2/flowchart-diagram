@@ -6,9 +6,8 @@ const DiamondNode: React.FC<NodeProps> = ({ data }) => {
   return (
     <div
       className={styles["diamond-node"]}
-      style={{ background: data.background || "#f39c12" }}
-      data-tooltip-id="node-tooltip"
-      data-tooltip-content={data.label}
+      data-tooltip-id="tooltip"
+      data-tooltip-content={String(data.label)}
     >
       <Handle
         type="target"

@@ -3,14 +3,14 @@ import ReactFlow, {
   Connection,
   Controls,
   Edge,
+  EdgeChange,
   MiniMap,
   Node,
   NodeChange,
   ReactFlowProvider,
   addEdge,
-  applyNodeChanges,
   applyEdgeChanges,
-  EdgeChange,
+  applyNodeChanges,
 } from "react-flow-renderer";
 import { Tooltip } from "react-tooltip";
 import DiamondNode from "./DiamondNode";
@@ -27,39 +27,58 @@ const initialNodes: Node[] = [
   {
     id: "2",
     data: { label: "Step 1" },
-    position: { x: 250, y: 100 },
+    position: { x: 200, y: 100 },
     className: `${styles.node} ${styles["node-step"]}`,
   },
   {
     id: "3",
     data: { label: "Step 2" },
-    position: { x: 450, y: 100 },
+    position: { x: 350, y: 100 },
     className: `${styles.node} ${styles["node-step"]}`,
   },
   {
     id: "4",
     type: "diamond",
     data: { label: "Decision" },
-    position: { x: 650, y: 100 },
+    position: { x: 350, y: 250 },
     className: `${styles.node} ${styles["node-decision"]}`,
   },
   {
     id: "5",
     data: { label: "Step 3" },
-    position: { x: 850, y: 50 },
+    position: { x: 550, y: 250 },
     className: `${styles.node} ${styles["node-step"]}`,
   },
   {
     id: "6",
     data: { label: "Step 4" },
-    position: { x: 650, y: 200 },
+    position: { x: 350, y: 450 },
     className: `${styles.node} ${styles["node-step"]}`,
   },
   {
     id: "7",
+    data: { label: "Step 5" },
+    position: { x: 350, y: 550 },
+    className: `${styles.node} ${styles["node-step"]}`,
+  },
+  {
+    id: "8",
     type: "output",
-    data: { label: "End" },
-    position: { x: 850, y: 200 },
+    data: { label: "End 1" },
+    position: { x: 50, y: 550 },
+    className: `${styles.node} ${styles["node-end"]}`,
+  },
+  {
+    id: "9",
+    data: { label: "Step 6" },
+    position: { x: 600, y: 450 },
+    className: `${styles.node} ${styles["node-step"]}`,
+  },
+  {
+    id: "10",
+    type: "output",
+    data: { label: "End 2" },
+    position: { x: 600, y: 600 },
     className: `${styles.node} ${styles["node-end"]}`,
   },
 ];
@@ -70,7 +89,6 @@ const initialEdges: Edge[] = [
     source: "1",
     target: "2",
     type: "smoothstep",
-    label: "Step 1",
     style: { strokeWidth: 3 },
   },
   {
@@ -78,7 +96,6 @@ const initialEdges: Edge[] = [
     source: "2",
     target: "3",
     type: "smoothstep",
-    label: "Step 2",
     style: { strokeWidth: 3 },
   },
   {
@@ -86,7 +103,6 @@ const initialEdges: Edge[] = [
     source: "3",
     target: "4",
     type: "smoothstep",
-    label: "Decision",
     style: { strokeWidth: 3 },
   },
   {
@@ -94,7 +110,6 @@ const initialEdges: Edge[] = [
     source: "4",
     target: "5",
     type: "smoothstep",
-    label: "Step 3",
     style: { strokeWidth: 3 },
   },
   {
@@ -102,7 +117,20 @@ const initialEdges: Edge[] = [
     source: "4",
     target: "6",
     type: "smoothstep",
-    label: "Step 4",
+    style: { strokeWidth: 3 },
+  },
+  {
+    id: "e5-9",
+    source: "5",
+    target: "9",
+    type: "smoothstep",
+    style: { strokeWidth: 3 },
+  },
+  {
+    id: "e9-10",
+    source: "9",
+    target: "10",
+    type: "smoothstep",
     style: { strokeWidth: 3 },
   },
   {
@@ -110,7 +138,13 @@ const initialEdges: Edge[] = [
     source: "6",
     target: "7",
     type: "smoothstep",
-    label: "End",
+    style: { strokeWidth: 3 },
+  },
+  {
+    id: "e7-8",
+    source: "7",
+    target: "8",
+    type: "smoothstep",
     style: { strokeWidth: 3 },
   },
 ];
@@ -122,7 +156,8 @@ const Flowchart: React.FC = () => {
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
 
   const onConnect = useCallback(
-    (params: Edge | Connection) => setEdges((eds) => addEdge(params, eds)),
+    (params: Edge | Connection) =>
+      setEdges((eds) => addEdge({ ...params, style: { strokeWidth: 3 } }, eds)),
     []
   );
   const onNodesChange = useCallback(
@@ -152,20 +187,6 @@ const Flowchart: React.FC = () => {
           onConnect={onConnect}
           onEdgeClick={onEdgeClick}
         >
-          {nodes.map((node) => (
-            <div
-              key={node.id}
-              data-tooltip-id="tooltip"
-              data-tooltip-content={String(node.data.label)}
-            />
-          ))}
-          {edges.map((edge) => (
-            <div
-              key={edge.id}
-              data-tooltip-id="tooltip"
-              data-tooltip-content={String(edge.label)}
-            />
-          ))}
           <MiniMap />
           <Controls />
           <Tooltip id="tooltip" />
