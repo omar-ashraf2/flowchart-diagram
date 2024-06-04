@@ -164,6 +164,22 @@ const Flowchart: React.FC = () => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
 
+  const getNextLabel = (type: string) => {
+    const count = nodes.filter((node) => node.type === type).length + 1;
+    switch (type) {
+      case "input":
+        return "Start";
+      case "default":
+        return `Step ${count}`;
+      case "diamond":
+        return "Decision";
+      case "output":
+        return `End ${count}`;
+      default:
+        return "Node";
+    }
+  };
+
   const onConnect = useCallback(
     (params: Edge | Connection) =>
       setEdges((eds) => addEdge({ ...params, style: { strokeWidth: 3 } }, eds)),
@@ -200,7 +216,7 @@ const Flowchart: React.FC = () => {
           id: `${+new Date()}`,
           type: item.type,
           position,
-          data: { label: item.label },
+          data: { label: getNextLabel(item.type) },
           className: item.className,
         };
         setNodes((nds) => nds.concat(newNode));
