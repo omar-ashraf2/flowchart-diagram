@@ -11,6 +11,7 @@ import ReactFlow, {
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
+  useReactFlow,
 } from "react-flow-renderer";
 import { Tooltip } from "react-tooltip";
 import DefaultNode from "./DefaultNode";
@@ -163,6 +164,7 @@ const nodeTypes = { diamond: DiamondNode, default: DefaultNode };
 const Flowchart: React.FC = () => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
+  const { project } = useReactFlow();
 
   const getNextLabel = (type: string) => {
     const count = nodes.filter((node) => node.type === type).length + 1;
@@ -207,11 +209,15 @@ const Flowchart: React.FC = () => {
       monitor
     ) => {
       const offset = monitor.getSourceClientOffset();
-      if (offset) {
-        const position = {
-          x: offset.x - 250,
-          y: offset.y,
-        };
+      const container = document.querySelector(`.${styles.flowchart}`);
+
+      if (offset && container) {
+        const containerBounds = container.getBoundingClientRect();
+        const position = project({
+          x: offset.x - containerBounds.left,
+          y: offset.y - containerBounds.top,
+        });
+
         const newNode: Node = {
           id: `${+new Date()}`,
           type: item.type,
@@ -225,27 +231,33 @@ const Flowchart: React.FC = () => {
   });
 
   return (
-    <ReactFlowProvider>
-      <div className={styles.container} style={{ height: "96vh" }}>
-        <Sidebar />
-        <div ref={drop} className={styles.flowchart}>
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            nodeTypes={nodeTypes}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            onEdgeClick={onEdgeClick}
-          >
-            <MiniMap />
-            <Controls />
-            <Tooltip id="tooltip" />
-          </ReactFlow>
-        </div>
+    <div className={styles.container} style={{ height: "96vh" }}>
+      <Sidebar />
+      <div ref={drop} className={styles.flowchart}>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          nodeTypes={nodeTypes}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          onEdgeClick={onEdgeClick}
+        >
+          <MiniMap />
+          <Controls />
+          <Tooltip id="tooltip" />
+        </ReactFlow>
       </div>
+    </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <ReactFlowProvider>
+      <Flowchart />
     </ReactFlowProvider>
   );
 };
 
-export default Flowchart;
+export default App;
