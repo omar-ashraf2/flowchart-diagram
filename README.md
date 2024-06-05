@@ -1,30 +1,48 @@
-# React + TypeScript + Vite
+# React Flowchart DnD App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Table of Contents
 
-Currently, two official plugins are available:
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Introduction
 
-## Expanding the ESLint configuration
+This project is a drag-and-drop flowchart application built with React, React Flow Renderer, React DnD, and Vite. Users can drag different types of nodes from a sidebar and drop them onto a canvas to create a flowchart.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Features
 
-- Configure the top-level `parserOptions` property like this:
+- Drag and drop nodes from a sidebar onto a canvas.
+- Connect nodes using edges.
+- Remove edges by clicking on them.
+- Different types of nodes (start, step, decision, end).
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## Installation
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+1. **Clone the repository:**
+
+   ```sh
+   git clone https://github.com/your-username/react-flowchart-dnd-app.git
+   cd react-flowchart-dnd-app
+   ```
+
+2. **Install dependencies:**
+
+   ```sh
+   npm install
+   ```
+
+3. **Start the development server:**
+
+   ```sh
+   npm run dev
+   ```
+
+## Usage
+
+1. Open the app in your browser.
+2. Drag nodes from the sidebar and drop them onto the canvas.
+3. Connect the nodes using edges.
+4. Remove edges by clicking on them.
+5. Use the controls to zoom in/out and move around the canvas.
