@@ -22,7 +22,6 @@ import Sidebar from "./Sidebar";
 
 import styles from "../styles/Flowchart.module.css";
 
-// Initial nodes and edges
 const initialNodes: Node[] = [
   {
     id: "1",
@@ -162,10 +161,8 @@ const initialEdges: Edge[] = [
   },
 ];
 
-// Node types
 const nodeTypes = { diamond: DiamondNode, default: DefaultNode };
 
-// Utility function to get the next label
 const getNextLabel = (type: string, nodes: Node[]): string => {
   const count = nodes.filter((node) => node.type === type).length + 1;
   switch (type) {

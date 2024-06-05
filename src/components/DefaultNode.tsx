@@ -9,7 +9,7 @@ interface DefaultNodeProps extends NodeProps {
 const DefaultNode: React.FC<DefaultNodeProps> = ({ data, className }) => {
   return (
     <div
-      className={`${styles.node} ${className}`}
+      className={`${styles.node} ${className ?? ""}`}
       data-tooltip-id="tooltip"
       data-tooltip-content={String(data.label)}
     >
