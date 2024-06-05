@@ -1,6 +1,6 @@
 import React from "react";
 import { useDrag } from "react-dnd";
-import styles from "./Flowchart.module.css";
+import styles from "../styles/Flowchart.module.css";
 
 const ItemTypes = {
   NODE: "node",

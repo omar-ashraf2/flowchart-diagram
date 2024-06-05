@@ -1,6 +1,6 @@
 import React from "react";
 import { Handle, NodeProps, Position } from "react-flow-renderer";
-import styles from "./Flowchart.module.css";
+import styles from "../styles/Flowchart.module.css";
 
 interface DefaultNodeProps extends NodeProps {
   className?: string;

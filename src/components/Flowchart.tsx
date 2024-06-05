@@ -17,7 +17,7 @@ import DefaultNode from "./DefaultNode";
 import DiamondNode from "./DiamondNode";
 import Sidebar from "./Sidebar";
 import { useDrop } from "react-dnd";
-import styles from "./Flowchart.module.css";
+import styles from "../styles/Flowchart.module.css";
 
 const initialNodes: Node[] = [
   {
