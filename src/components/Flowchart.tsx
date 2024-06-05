@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import { useDrop } from "react-dnd";
 import ReactFlow, {
   Connection,
   Controls,
@@ -14,12 +15,14 @@ import ReactFlow, {
   useReactFlow,
 } from "react-flow-renderer";
 import { Tooltip } from "react-tooltip";
+
 import DefaultNode from "./DefaultNode";
 import DiamondNode from "./DiamondNode";
 import Sidebar from "./Sidebar";
-import { useDrop } from "react-dnd";
+
 import styles from "../styles/Flowchart.module.css";
 
+// Initial nodes and edges
 const initialNodes: Node[] = [
   {
     id: "1",
@@ -159,44 +162,49 @@ const initialEdges: Edge[] = [
   },
 ];
 
+// Node types
 const nodeTypes = { diamond: DiamondNode, default: DefaultNode };
+
+// Utility function to get the next label
+const getNextLabel = (type: string, nodes: Node[]): string => {
+  const count = nodes.filter((node) => node.type === type).length + 1;
+  switch (type) {
+    case "input":
+      return "Start";
+    case "default":
+      return `Step ${count}`;
+    case "diamond":
+      return "Decision";
+    case "output":
+      return "End";
+    default:
+      return "Node";
+  }
+};
 
 const Flowchart: React.FC = () => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
   const { project } = useReactFlow();
 
-  const getNextLabel = (type: string) => {
-    const count = nodes.filter((node) => node.type === type).length + 1;
-    switch (type) {
-      case "input":
-        return "Start";
-      case "default":
-        return `Step ${count}`;
-      case "diamond":
-        return "Decision";
-      case "output":
-        return `End`;
-      default:
-        return "Node";
-    }
-  };
-
   const onConnect = useCallback(
     (params: Edge | Connection) =>
       setEdges((eds) => addEdge({ ...params, style: { strokeWidth: 3 } }, eds)),
     []
   );
+
   const onNodesChange = useCallback(
     (changes: NodeChange[]) =>
       setNodes((nds) => applyNodeChanges(changes, nds)),
     []
   );
+
   const onEdgesChange = useCallback(
     (changes: EdgeChange[]) =>
       setEdges((eds) => applyEdgeChanges(changes, eds)),
     []
   );
+
   const onEdgeClick = useCallback((event: React.MouseEvent, edge: Edge) => {
     event.stopPropagation();
     setEdges((eds) => eds.filter((e) => e.id !== edge.id));
@@ -222,7 +230,7 @@ const Flowchart: React.FC = () => {
           id: `${+new Date()}`,
           type: item.type,
           position,
-          data: { label: getNextLabel(item.type) },
+          data: { label: getNextLabel(item.type, nodes) },
           className: item.className,
         };
         setNodes((nds) => nds.concat(newNode));
@@ -252,12 +260,10 @@ const Flowchart: React.FC = () => {
   );
 };
 
-const App: React.FC = () => {
-  return (
-    <ReactFlowProvider>
-      <Flowchart />
-    </ReactFlowProvider>
-  );
-};
+const App: React.FC = () => (
+  <ReactFlowProvider>
+    <Flowchart />
+  </ReactFlowProvider>
+);
 
 export default App;
