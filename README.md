@@ -23,8 +23,8 @@ This project is a drag-and-drop flowchart application built with React, React Fl
 1. **Clone the repository:**
 
    ```sh
-   git clone https://github.com/your-username/react-flowchart-dnd-app.git
-   cd react-flowchart-dnd-app
+   git clone git@github.com:omar-ashraf2/flowchart-diagram.git
+   cd flowchart-diagram
    ```
 
 2. **Install dependencies:**
